@@ -90,9 +90,10 @@ The indexer:
 - attributes a session's cost to a real day — the last message seen, then the
   session start time. No synthetic buckets.
 
-The first scan of ~1 GB of transcripts takes about nine seconds. Later scans
-reuse the cache. The Overview page has a **Rebuild transcript index** button
-when you want a forced re-read.
+The first scan of ~1.4 GB of transcripts takes about 15 seconds. Later scans
+reuse the cache — a rescan over the same 1,291 files takes under a second. The
+Overview page has a **Rebuild transcript index** button when you want a forced
+re-read.
 
 ## Safety rules the code enforces
 
