@@ -30,6 +30,7 @@
     "web": "vite",
     "build": "vite build",
     "start": "node server/index.js",
+    "doctor": "node server/doctor.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

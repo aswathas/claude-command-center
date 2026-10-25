@@ -27,6 +27,29 @@ Everything runs on your machine. Nothing is uploaded, and there is no account.
 
 Requires **Node.js 18+** and a working Claude Code CLI.
 
+### The one-command way
+
+**macOS / Linux**
+
+```bash
+git clone https://github.com/aswathas/claude-command-center.git
+cd claude-command-center
+./scripts/install.sh
+```
+
+**Windows**
+
+```powershell
+git clone https://github.com/aswathas/claude-command-center.git
+cd claude-command-center
+powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+```
+
+The installer installs dependencies, builds the console, detects the Claude
+Code install on the machine, and prints what it found.
+
+### By hand
+
 ```bash
 git clone https://github.com/aswathas/claude-command-center.git
 cd claude-command-center
@@ -43,17 +66,54 @@ npm run dev        # API on 8787, Vite dev server on 5173
 
 `start.cmd` (Windows) does the same thing in one click.
 
-### Pointing it at a different Claude Code install
+## Plug in your own Claude Code
 
-By default the dashboard reads `~/.claude`. Override that with two environment
-variables — useful for testing against a scratch install, or for running a
-second dashboard against a different profile:
+The dashboard reads `~/.claude` and `~/.claude.json` by default — the install
+you already have, auto-detected. It never asks you to import anything, and it
+never talks to a server to find out what you have installed.
+
+Check what it detected before you start it:
+
+```bash
+npm run doctor
+```
+
+```
+Claude home
+  CLAUDE_HOME /Users/you/.claude found
+  CLAUDE_JSON /Users/you/.claude.json found
+
+What is on disk
+  skills        175 enabled · 3 parked
+  plugins       29 installed · 12 enabled · 2 marketplaces
+  mcp servers   11 global · 28 across project scopes
+  memory        26 files in the user memory folder · 4 project memory folders
+  transcripts   1291 jsonl files · 1402 MB across 57 project folders
+```
+
+To point it at a **different** install — a scratch profile, an exported
+`.claude` folder, a second machine:
 
 ```bash
 CLAUDE_HOME=/path/to/.claude \
 CLAUDE_JSON=/path/to/.claude.json \
 npm start
 ```
+
+On Windows PowerShell:
+
+```powershell
+$env:CLAUDE_HOME = "C:\path\to\.claude"
+$env:CLAUDE_JSON = "C:\path\to\.claude.json"
+npm start
+```
+
+The transcript cache lives inside the Claude home it indexes, so two
+dashboards on two different installs never fight over it. The port comes from
+`CCC_PORT` (8787 by default).
+
+Full onboarding, multiple profiles, troubleshooting and uninstall:
+**[docs/QUICKSTART.md](docs/QUICKSTART.md)**.
 
 ## Running tasks from your phone
 
@@ -90,10 +150,10 @@ The indexer:
 - attributes a session's cost to a real day — the last message seen, then the
   session start time. No synthetic buckets.
 
-The first scan of ~1.4 GB of transcripts takes about 15 seconds. Later scans
-reuse the cache — a rescan over the same 1,291 files takes under a second. The
-Overview page has a **Rebuild transcript index** button when you want a forced
-re-read.
+The first scan of ~869 MB of transcripts across 1,292 session files takes
+about 9 seconds. Later scans reuse the cache — a rescan over the same files
+takes about 0.13 seconds. The Overview page has a **Rebuild transcript index**
+button when you want a forced re-read.
 
 ## Safety rules the code enforces
 
@@ -117,14 +177,20 @@ re-read.
 server/
   index.js            Express API
   claude-home.js      paths, guarded read/write, backups
+  doctor.js           detect the local Claude Code install (npm run doctor)
   redact.js           secret masking
   usage-index.js      transcript scanning and aggregation
   services/           skills, plugins, mcp, settings, memory
+scripts/
+  install.sh          one-command setup, macOS and Linux
+  install.ps1         one-command setup, Windows
 src/
   App.tsx             shell, navigation, theme
   pages/              one file per page
   components/         heatmap, charts, toggle, tooltip, toast
   styles/             design tokens and layout
+docs/
+  QUICKSTART.md       plug it into your own Claude Code
 ```
 
 ## Design notes
