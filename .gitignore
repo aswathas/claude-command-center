@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.cache/
+graphify-out/
+
+# timestamped backups the app writes next to every config it changes
+*.bak.*
+
+# local env
+.env
+.env.local
+
+# personal planning notes — not part of the public project
+PLAN-mobile-remote.md
+
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,225 @@
+/* ------------------------------------------------------------------ tokens
+   Workshop console: graphite castings, brass fittings, paper-white legends.
+   Both themes are separately chosen sets of steps for their own surface —
+   the light theme is a paper bench, not an inverted dark panel.           */
+
+:root {
+  --font-ui: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --font-data: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  --step--2: 10px;
+  --step--1: 11px;
+  --step-0: 13px;
+  --step-1: 15px;
+  --step-2: 18px;
+  --step-3: 23px;
+  --step-4: 30px;
+  --step-5: 44px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 160ms;
+  --dur-slow: 220ms;
+}
+
+/* Dark — bench at night */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --ground: #15140f;
+  --panel: #1c1b15;
+  --raised: #24221b;
+  --line: #2f2c23;
+  --line-strong: #3d392e;
+
+  --ink: #f0ead9;
+  --ink-2: #b6ae9b;
+  --ink-3: #8a8271;
+
+  --brass: #d9a441;
+  --brass-bright: #f2c877;
+  --brass-deep: #a97c22;
+  --brass-wash: rgba(217, 164, 65, 0.12);
+
+  --rust: #cf6b50;
+  --rust-wash: rgba(207, 107, 80, 0.12);
+  --sage: #7f9a6b;
+  --sage-wash: rgba(127, 154, 107, 0.14);
+  --steel: #6f8fa6;
+  --steel-wash: rgba(111, 143, 166, 0.14);
+
+  --seq-0: #241f14;
+  --seq-1: #3b3119;
+  --seq-2: #55441c;
+  --seq-3: #715620;
+  --seq-4: #8f6c26;
+  --seq-5: #ad8430;
+  --seq-6: #cb9c3c;
+  --seq-7: #e6b54e;
+
+  --grid-ink: rgba(217, 164, 65, 0.045);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.38);
+}
+
+/* Light — paper bench */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --ground: #ece7dc;
+  --panel: #f5f1e8;
+  --raised: #fbf8f1;
+  --line: #d8d1c2;
+  --line-strong: #bdb4a1;
+
+  --ink: #1d1a12;
+  --ink-2: #57503f;
+  --ink-3: #6f6656;
+
+  --brass: #8a6212;
+  --brass-bright: #a97c22;
+  --brass-deep: #6b4a0d;
+  --brass-wash: rgba(138, 98, 18, 0.1);
+
+  --rust: #a63f2a;
+  --rust-wash: rgba(166, 63, 42, 0.1);
+  --sage: #4f6b3e;
+  --sage-wash: rgba(79, 107, 62, 0.12);
+  --steel: #3d5d75;
+  --steel-wash: rgba(61, 93, 117, 0.1);
+
+  --seq-0: #efe9da;
+  --seq-1: #e0cfa0;
+  --seq-2: #cdb26a;
+  --seq-3: #b8933c;
+  --seq-4: #9c7524;
+  --seq-5: #7f5c14;
+  --seq-6: #63470f;
+  --seq-7: #4a340a;
+
+  --grid-ink: rgba(138, 98, 18, 0.05);
+  --shadow: 0 1px 2px rgba(29, 26, 18, 0.08), 0 10px 30px rgba(29, 26, 18, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--brass);
+  text-underline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--brass-wash);
+}
+
+.mono {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+
+/* An engraved legend: uppercase, tracked, small. Never a mono costume. */
+.legend {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Browser surfaces that belong to the palette. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+input[type='text'],
+input[type='password'],
+textarea,
+select {
+  caret-color: var(--brass);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

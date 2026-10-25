@@ -1,0 +1,52 @@
+{
+  "name": "claude-command-center",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Local control room for a Claude Code installation: skills, plugins, MCP servers, settings, memory, and token telemetry.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aswathas/claude-command-center.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aswathas/claude-command-center/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "dashboard",
+    "mcp",
+    "skills",
+    "plugins",
+    "token-telemetry",
+    "local-first"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "concurrently -n server,web -c cyan,magenta \"node server/index.js\" \"vite\"",
+    "server": "node server/index.js",
+    "web": "vite",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.2.5",
+    "express": "^4.21.2",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11"
+  }
+}
