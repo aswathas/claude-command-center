@@ -11,6 +11,8 @@ instead of the CLI.
 
 Everything runs on your machine. Nothing is uploaded, and there is no account.
 
+**Field manual and screenshots:** https://aswathas.github.io/captain-code/
+
 ## What it does
 
 | Page | Reads | Writes |
