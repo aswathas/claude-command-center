@@ -59,27 +59,40 @@ function exists(p) {
   }
 }
 
-/** Claude Code writes one JSONL transcript per session under projects/<slug>/. */
+/** Claude Code writes one JSONL transcript per session under projects/<slug>/.
+ *  Subdirectories (subagent runs) hold transcripts too, so walk recursively —
+ *  the same tree the dashboard's indexer reads. */
 function transcriptStats() {
   const projects = path.join(home, 'projects');
   let files = 0;
   let bytes = 0;
   let dirs = 0;
-  try {
-    for (const entry of fs.readdirSync(projects, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      dirs += 1;
-      const dir = path.join(projects, entry.name);
-      for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
-        if (!f.isFile()) continue;
-        if (!f.name.endsWith('.jsonl')) continue;
+  const walk = (dir) => {
+    let entries = [];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (entry.isFile() && entry.name.endsWith('.jsonl')) {
         files += 1;
         try {
-          bytes += fs.statSync(path.join(dir, f.name)).size;
+          bytes += fs.statSync(full).size;
         } catch {
           /* a file can vanish mid-scan; skip its size */
         }
       }
+    }
+  };
+  try {
+    for (const entry of fs.readdirSync(projects, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      dirs += 1;
+      walk(path.join(projects, entry.name));
     }
   } catch {
     /* no projects directory yet */

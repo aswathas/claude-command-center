@@ -58,7 +58,7 @@ What is on disk
   plugins       29 installed · 11 enabled · 16 marketplaces
   mcp servers   5 global · 2 across project scopes
   memory        6 user memory files · 25 files in 6 project memory folders
-  transcripts   1292 jsonl files · 869 MB across 52 project folders
+  transcripts   1292 jsonl files · 1239 MB across 52 project folders
 ```
 
 Nothing is uploaded and no secret is printed — it counts files and prints
